@@ -1,0 +1,31 @@
+<div class="smorg-navbar">
+	<div class="smorg-item"><a href="#/city">city</a></div>
+	<div class="smorg-item"><a href="#/following">following</a></div>
+	<div class="smorg-item smorg-active"><a href="#/home">home</a></div>
+</div>
+
+<div class="smorg-home-container">
+	<div class="smorg-home-subtitle">upcoming</div>
+	<div class="smorg-home-content">
+		<div class="smorg-profile-user-uploads" ng-repeat="up in upcoming">
+				<img src="img/activity/{{ up.id_activity }}.png"/>
+			<div class="smorg-profile-title">{{ up.title }}</div>
+		</div>
+	</div>
+
+	<div class="smorg-home-subtitle">favorites</div>
+	<div class="smorg-home-content">
+			<div class="smorg-profile-user-uploads" ng-repeat="favorite in favorites">
+				<img src="img/activity/{{ favorite.id_activity }}.png"/>
+			<div class="smorg-profile-title">{{ favorite.title }}</div>
+		</div>
+	</div>
+</div>
+
+<br /><br />
+<button class="smorg-logout-button" ng-click="logoutClick()">logout</button>
+
+
+<div class="smorg-footmenu">
+	<div class="smorg-footer-item-home"><center><i class="icon-camera"></i> &nbsp SHARE</center></div>
+</div>

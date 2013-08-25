@@ -1,0 +1,35 @@
+<div>
+
+   <form ng-upload action="api/index.php/post_activity">
+       <p>
+           <label>Title:</label>
+           <input type="text" name="title" ng-model="activity.title" />
+       </p>
+       <p>
+           <label>Description:</label>
+           <input type="text" name="description" ng-model="activity.description" />
+       </p>
+       <p>
+           <label>Good For</label>
+           <input type="text" name="goodfor" ng-model="activity.goodfor"/>
+       </p>
+       <p>
+           <label>Picture:</label>
+           <input type="file" name="photo" accept="image/*" />
+       </p>
+       <p>
+           <input type="submit" class="btn" value="Submit" 
+             upload-submit="uploadComplete(content, completed)" />
+       </p>
+       		<input type="hidden" name="id_member" ng-model="activity.id_member" value="{{ id_member }}" />
+   </form>
+
+	<br /><br />
+	
+	<label>Search Me :)</label>
+	<input type="text" ng-model="tag" ng-change="searchTag()" />
+	<div ng-repeat="result in tag_results">
+		<p>{{ result.tag_text }}</p>
+	</div>
+
+</div>

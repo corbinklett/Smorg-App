@@ -1,0 +1,40 @@
+<div class="smorg-navbar">
+	<div class="back-button-div" onclick="history.back()"><button class="back-button"><img src="img/icons/back.png" class="back-button-img"></button></div>
+  <div class="profile-menu">{{ tags }}</div>
+</div>
+
+<div class="activity-container">
+
+<article ng-repeat="activity in activities">
+	<div class="activity">
+		<img src="img/activity/{{ activity.id_activity }}.png" ng-click="isCollapsed=!isCollapsed">
+		<div class="button-group">
+			<button class="activity-button" ng-click="favoriteItem(activity.id_activity)"><img src="img/icons/star.png" id="star_{{ activity.id_activity }}"></button>
+			<!--<button class="activity-button"><img src="img/icons/share.png"></button>-->
+
+			<button class="activity-button dropdown-toggle">
+				<img src="img/icons/share.png">
+			</button>
+
+			<div class="dropdown-menu send-div">
+  				<label>Share With</label><input type="text" placeholder="Enter friends' names.">
+  				<label>Message</label><input type="text">
+  				<button class="post-submit smorg-button">SEND!</button>
+  			</div>
+
+
+			<button class="profile-pic" ng-click="goToProfile(activity.id_member)"><img src="img/users/{{ activity.id_member }}.png"></button>
+		</div>
+	</div>
+	<div collapse="isCollapsed" class="collapse-div" id="{{ activity.id_activity }}">
+		<span class="activity-span title">{{ activity.title }}</span><br />
+		<span class="activity-span description">Description: {{ activity.description }}</span><br />
+		<span class="activity-span goodfor">good for: </span><span class="activity-span description">{{ activity.goodfor }}</span>
+	</div>
+</article>
+
+</div>
+
+
+
+

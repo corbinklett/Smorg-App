@@ -1,0 +1,60 @@
+<ng-include src="uploadPage"></ng-include>
+
+<div class="smorg-navbar">
+	<div class="smorg-item smorg-active"><a href="#/city">city</a></div>
+	<div class="smorg-item"><a href="#/following">following</a></div>
+	<div class="smorg-item"><a href="#/home">home</a></div>
+</div>
+
+<div class="activity-container">
+<article ng-repeat="activity in activities">
+	<div class="activity">
+		<img src="img/activity/{{ activity.id_activity }}.png" ng-click="isCollapsed=!isCollapsed">
+		<div class="button-group">
+			<button class="activity-button" ng-click="favoriteItem(activity.id_activity)"><img src="img/icons/star.png" id="star_{{ activity.id_activity }}"></button>
+			<!--<button class="activity-button"><img src="img/icons/share.png"></button>-->
+
+			<button class="activity-button dropdown-toggle">
+				<img src="img/icons/share.png">
+			</button>
+
+			<div class="dropdown-menu send-div">
+  				<label>Share With</label><input type="text" placeholder="Enter friends' names.">
+  				<label>Message</label><input type="text">
+  				<button class="post-submit smorg-button">SEND!</button>
+  			</div>
+
+
+			<button class="profile-pic" ng-click="goToProfile(activity.id_member)"><img src="img/users/{{ activity.id_member }}.png"></button>
+		</div>
+	</div>
+	<div collapse="isCollapsed" class="collapse-div" id="{{ activity.id_activity }}">
+		<span class="activity-span title">{{ activity.title }}</span><br />
+		<span class="activity-span description">Description: {{ activity.description }}</span><br />
+		<span class="activity-span goodfor">good for: </span><span class="activity-span description">{{ activity.goodfor }}</span>
+	</div>
+</article>
+
+</div>
+
+<!--div for search -->
+<div class="smorg-search">
+
+<div class='container-fluid'>
+	<!--<input type="text" ng-model="tag" ng-change="searchTag()">-->
+
+	<input type="hidden" ui-select2="select2Options" multiple ng-model="tags" style="width:180px" data-placeholder="Good For...">
+	<button ng-click="submitSearch(tags)">search</button>
+</div>
+
+</div>
+
+
+
+<div class="smorg-footmenu">
+	<div class="smorg-item smorg-foot smorg-foot-left" ng-click="uploadPage='partials/upload/post1.html'"><i class="icon-camera"></i> &nbsp SHARE</div>
+	<div class="smorg-item smorg-foot" ng-click="showSearch()"><i class="icon-search"></i> &nbsp SEARCH</div>
+</div>
+
+
+

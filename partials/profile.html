@@ -1,0 +1,72 @@
+<div class="smorg-navbar">
+	<div class="back-button-div" onclick="history.back()"><button class="back-button"><img src="img/icons/back.png" class="back-button-img"></button></div>
+  <div class="profile-menu">@{{ memberdata.user }}</div>
+</div>
+
+<div class="person-container">
+	<div><img src="img/users/{{ memberdata.id_member }}.png" class="user-pic"></div>
+	<div class="user-data">
+		<h1>{{ memberdata.firstname }} {{ memberdata.lastname }}</h1><br />
+		<p>{{ memberdata.about }}</p><br /><br />
+		<h1>Reposted:</h1><p> {{ memberdata.fav_count }}</p><br />
+		<h1>Followers:</h1><p> {{ memberdata.followers }}</p><br />
+		<div ng-switch on="whoami">
+			<span ng-switch-default></span>
+			<button ng-switch-when="following" ng-click="unfollowMember()">FOLLOWING</button>
+			<button ng-switch-when="notfollowing" ng-click="followMember()">FOLLOW</button>
+		</div>
+	</div>
+</div>
+
+<div class="profile-activities-container">
+	<div class="activity-heading">
+		THINGS
+	</div>
+	<div class="activity-contents">
+		<div class="smorg-profile-user-uploads" ng-repeat="activity in activities">
+			<img src="img/activity/{{ activity.id_activity }}.png"/>
+			<div class="smorg-profile-title">{{ activity.title }}</div>
+		</div>
+	</div>
+
+	<div class="activity-heading">
+		FOLLOWING
+	</div>
+	<div class="activity-contents">
+		<div class="smorg-profile-user-following" ng-repeat="friend in following">
+			<img src="img/users/{{ friend.id_member_friend }}.png"/>
+			<!--<div class="smorg-profile-title">{{ activity.title }}</div>-->
+		</div>
+	</div>
+
+</div>
+
+
+
+
+<!--
+<div class="profile-container span12">
+
+	<div class="profile-head">
+		<div class="user-pic-div"><img src="img/users/{{ memberdata.id_member }}.png" class="user-pic"></div>
+		<div class="user-text-div">
+			<h1>{{ memberdata.firstname }} {{ memberdata.lastname }}</h1>
+			<p>{{ memberdata.about }}</p>
+			<span><p>Starred: {{ memberdata.fav_count }} &nbsp&nbspFollowers: {{ memberdata.followers }}</p>
+		</div>
+	</div>
+-->
+<!--
+<div class="activity-container">
+  <accordion close-others="oneAtATime">
+    <accordion-group heading="{{group.title}}" ng-repeat="group in groups" class="accordian-header">
+      {{group.content}}
+    </accordion-group>
+  </accordion>
+
+</div>
+-->
+
+<!--put number of favorites and shared-->
+
+

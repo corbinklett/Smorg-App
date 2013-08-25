@@ -1,0 +1,18 @@
+<style>
+body {background: #DB6F44;}
+</style>
+
+
+<div class="login-box">
+	<center class="logo">SMORG<span class="logo-subtitle"> WHAT TO DO?</span></center>
+
+	<center>
+	{{ member.loginErr }}
+	<form id="login">
+		<input class="login-input" type="text" ng-model="member.username" placeholder="Username"/><br />
+		<input class="login-input" type="password" ng-model="member.password" placeholder="Password"/><br />
+		<button class="login-button" ng-click="memberLogin()">LOGIN</button>
+		<button class="login-button" ng-click="signUpClick()">SIGN UP</button>
+	</form>
+	</center>
+</div>
