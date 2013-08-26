@@ -1,1 +1,11 @@
-(push this to github... didn't work on 8/25)
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget id="com.smorgapp.Smorg"
+		version="0.0.1">
+
+<name>Smorg</name>
+
+<preference name="orientation" value="portrait" />
+<preference name="show-splash-screen-spinner" value="false" /> <!--iOS only-->
+
+<icon src="icon.png" />
