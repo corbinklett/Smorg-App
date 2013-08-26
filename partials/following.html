@@ -10,12 +10,12 @@
 
 <article ng-repeat="activity in activities">
 	<div class="activity">
-		<img src="img/activity/{{ activity.id_activity }}.png" ng-click="isCollapsed=!isCollapsed">
+		<img src="http://smorgasbored.com/img/activity/{{ activity.id_activity }}.png" ng-click="isCollapsed=!isCollapsed">
 		<div class="button-group">
-			<button class="activity-button" ng-click="favoriteItem(activity.id_activity)"><img src="img/icons/star.png" id="star_{{ activity.id_activity }}"></button>
-			<!--<button class="activity-button"><img src="img/icons/share.png"></button>-->
+			<button class="activity-button" ng-click="favoriteItem(activity.id_activity)"><img src="http://smorgasbored.com/img/icons/star.png" id="star_{{ activity.id_activity }}"></button>
+			<!--<button class="activity-button"><img src="http://smorgasbored.com/img/icons/share.png"></button>-->
 			<button class="activity-button dropdown-toggle">
-				<img src="img/icons/share.png">
+				<img src="http://smorgasbored.com/img/icons/share.png">
 			</button>
 
 			<div class="dropdown-menu send-div">
@@ -24,7 +24,7 @@
   				<button class="post-submit smorg-button">SEND!</button>
   			</div>
 
-			<button class="profile-pic" ng-click="goToProfile(activity.id_member)"><img src="img/users/{{ activity.id_member }}.png"></button>
+			<button class="profile-pic" ng-click="goToProfile(activity.id_member)"><img src="http://smorgasbored.com/img/users/{{ activity.id_member }}.png"></button>
 		</div>
 	</div>
 	<div collapse="isCollapsed" class="collapse-div" id="{{ activity.id_activity }}">

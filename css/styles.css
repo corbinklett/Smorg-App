@@ -348,7 +348,7 @@ button {
 	top:135px;
 }
 input.smorg-post-text-input {
-	/*background: url('../img/users/26.png') no-repeat;
+	/*background: url('..http://smorgasbored.com/img/users/26.png') no-repeat;
 	background-size: contain;*/
 	background-color: #f2f2fc;
 	border-radius: 0;
@@ -404,7 +404,7 @@ input:focus {
 .image-input-background {
 	position:relative;
 	text-align:center;
-	background: url('../img/icons/camera.png') no-repeat center;
+	background: url('http://smorgasbored.com/img/icons/camera.png') no-repeat center;
 	border:none;
 }
 

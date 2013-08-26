@@ -75,7 +75,7 @@ function FollowingCtrl($scope, $cookies, ActivityDatabase, $location, $http, Fav
         
         var button_id = 'star_' + id;
         var img = document.getElementById(button_id);
-        img.setAttribute("src", "img/icons/star_yellow.png");
+        img.setAttribute("src", "http://smorgasbored.com/img/icons/star_yellow.png");
   }
 
     $scope.goToProfile = function(id) {
@@ -172,7 +172,7 @@ $scope.submitSearch = function(tags) {
         
         var button_id = 'star_' + id;
         var img = document.getElementById(button_id);
-        img.setAttribute("src", "img/icons/star_yellow.png");
+        img.setAttribute("src", "http://smorgasbored.com/img/icons/star_yellow.png");
   }
 
   $scope.goToProfile = function(id) {
@@ -260,7 +260,7 @@ function SearchResCtrl($scope, $routeParams, $cookies, $location, SearchResults,
     
     var button_id = 'star_' + id;
     var img = document.getElementById(button_id);
-    img.setAttribute("src", "img/icons/star_yellow.png");
+    img.setAttribute("src", "http://smorgasbored.com/img/icons/star_yellow.png");
   }
 
   $scope.goToProfile = function(id) {
