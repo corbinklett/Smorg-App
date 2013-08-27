@@ -13,6 +13,11 @@
 <icon src="icon.png" />
 <gap:splash src="splash.png" />
 
+<feature name="debug-server" required="true">
+	<param name="domain" value="http://108.72.245.83" />
+	<param name="key" value="smorgapp" />
+</feature>
+
 <access origin="http://smorgasbored.com" subdomains="true" />
 
 </widget>
