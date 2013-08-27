@@ -9,3 +9,6 @@
 <preference name="show-splash-screen-spinner" value="false" /> <!--iOS only-->
 
 <icon src="icon.png" />
+<gap:splash src="splash.png" />
+
+<access origin="http://smorgasbored.com" subdomains="true" />
