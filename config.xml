@@ -12,3 +12,5 @@
 <gap:splash src="splash.png" />
 
 <access origin="http://smorgasbored.com" subdomains="true" />
+
+</widget>
