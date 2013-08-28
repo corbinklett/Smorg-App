@@ -15,12 +15,9 @@ function LoginCtrl($scope, $location, MemberDatabase, $cookies, $rootScope) {
   }
 
   $scope.memberLogin = function() {
-    alert($scope.member.username);
-    alert($scope.member.password);
     $scope.member = MemberDatabase.get({username:$scope.member.username, password:$scope.member.password},
       function(data){
         if (data.user) {
-          alert('database call made');
           $cookies.user = $scope.member.user;
           $cookies.firstname = $scope.member.firstname;
           $cookies.lastname = $scope.member.lastname;
@@ -29,7 +26,6 @@ function LoginCtrl($scope, $location, MemberDatabase, $cookies, $rootScope) {
           $location.path('/following');
         }
         else {
-          alert('error');
           $scope.member.loginErr = 'Incorrect Username/Password';
         } 
       });
