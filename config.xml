@@ -14,7 +14,7 @@
 <gap:splash src="splash.png" />
 
 <feature name="debug-server" required="true">
-	<param name="domain" value="http://10.0.1.3:8080" />
+	<param name="domain" value="http://192.168.180.162" />
 	<param name="key" value="smorgapp" />
 </feature>
 
