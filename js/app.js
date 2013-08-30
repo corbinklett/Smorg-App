@@ -5,7 +5,7 @@
 //angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'myApp.controllers']).
   
 var smorg = angular.module('smorg', ['ui.bootstrap', 'services', 'ngCookies', 'directives', 'imageupload', 'ngUpload', 'ui.select2', 'LocalStorageModule']);
-/*
+
 smorg.config(function($routeProvider, $compileProvider) {
 $routeProvider.    
     when('/login', {templateUrl: 'partials/login.html', controller: LoginCtrl}).
@@ -20,9 +20,9 @@ $routeProvider.
   
     $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
   });
-*/
 
 
+/*
 smorg.config(['$routeProvider', function($routeProvider) {
 $routeProvider.    
     when('/login', {templateUrl: 'partials/login.html', controller: LoginCtrl}).
@@ -35,7 +35,7 @@ $routeProvider.
     when('/upload', {templateUrl: 'partials/upload.html', controller: UploadCtrl}).
     otherwise({redirectTo: '/login'});
   }]);
-
+*/
 /*
 angular.module('App', []).config(function ($routeProvider, $compileProvider) {
 
