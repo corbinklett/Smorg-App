@@ -1,10 +1,10 @@
 <div class="smorg-navbar">
-	<div class="back-button-div" onclick="history.back()"><button class="back-button"><img src="img/icons/back.png" class="back-button-img"></button></div>
+	<div class="back-button-div" onclick="history.back()"><button class="back-button"><img src="http://smorgasbored.com/img/icons/back.png" class="back-button-img"></button></div>
   <div class="profile-menu">@{{ memberdata.user }}</div>
 </div>
 
 <div class="person-container">
-	<div><img src="img/users/{{ memberdata.id_member }}.png" class="user-pic"></div>
+	<div><img src="http://smorgasbored.com/img/users/{{ memberdata.id_member }}.png" class="user-pic"></div>
 	<div class="user-data">
 		<h1>{{ memberdata.firstname }} {{ memberdata.lastname }}</h1><br />
 		<p>{{ memberdata.about }}</p><br /><br />
@@ -24,7 +24,7 @@
 	</div>
 	<div class="activity-contents">
 		<div class="smorg-profile-user-uploads" ng-repeat="activity in activities">
-			<img src="img/activity/{{ activity.id_activity }}.png"/>
+			<img src="http://smorgasbored.com/img/activity/{{ activity.id_activity }}.png"/>
 			<div class="smorg-profile-title">{{ activity.title }}</div>
 		</div>
 	</div>
@@ -34,7 +34,7 @@
 	</div>
 	<div class="activity-contents">
 		<div class="smorg-profile-user-following" ng-repeat="friend in following">
-			<img src="img/users/{{ friend.id_member_friend }}.png"/>
+			<img src="http://smorgasbored.com/img/users/{{ friend.id_member_friend }}.png"/>
 			<!--<div class="smorg-profile-title">{{ activity.title }}</div>-->
 		</div>
 	</div>
