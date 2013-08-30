@@ -1,5 +1,13 @@
 /* styles.css */
 
+@font-face {
+	font-family: "Lato";
+	src: url(../lib/fonts/Lato-Light.ttf);
+}
+@font-face {
+	font-family: "PT Mono";
+	src: url(../lib/fonts/PTM55FT.ttf);
+}
 body {
 	background-color: #f0f1f1;
 	font-family: "Lato", sans-serif;
