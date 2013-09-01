@@ -6,8 +6,11 @@
   
 var smorg = angular.module('smorg', ['ui.bootstrap', 'services', 'ngCookies', 'directives', 'imageupload', 'ngUpload', 'ui.select2', 'LocalStorageModule']);
 
-smorg.config(function($routeProvider, $compileProvider) {
-$routeProvider.    
+smorg.config(function($compileProvider) {
+    $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+})
+.config(['$routeProvider', function($routeProvider) {
+    $routeProvider.    
     when('/login', {templateUrl: 'partials/login.html', controller: LoginCtrl}).
     when('/signup', {templateUrl: 'partials/signup.html', controller: SignupCtrl}).
     when('/following', {templateUrl: 'partials/following.html', controller: FollowingCtrl}).
@@ -17,10 +20,7 @@ $routeProvider.
     when('/search_results/:search_tags/:tag_text', {templateUrl: 'partials/search_results.html', controller:SearchResCtrl}).
     when('/upload', {templateUrl: 'partials/upload.html', controller: UploadCtrl}).
     otherwise({redirectTo: '/login'});
-  
-    $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
-  });
-
+}]);
 
 /*
 smorg.config(['$routeProvider', function($routeProvider) {
