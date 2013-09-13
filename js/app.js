@@ -6,9 +6,9 @@
   
 var smorg = angular.module('smorg', ['ui.bootstrap', 'services', 'ngCookies', 'directives', 'imageupload', 'ngUpload', 'ui.select2', 'LocalStorageModule']);
 
-smorg.config(function($compileProvider) {
+smorg.config(['$compileProvider', function($compileProvider) {
     $compileProvider.urlSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
-})
+}])
 .config(['$routeProvider', function($routeProvider) {
     $routeProvider.    
     when('/login', {templateUrl: 'partials/login.html', controller: LoginCtrl}).
