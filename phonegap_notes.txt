@@ -1,0 +1,14 @@
+1. Build phonegap project
+2. Edit the config.xml file in the top level www folder as needed.
+3. Make sure that www/index.html contains links to js/index.js and includes the app.initialize(); script.
+4. May be smart to update version of angular.
+
+The "if($cookies.user)" does not seem to work in PhoneGap.
+
+Changed LoginCtrl
+
+These changes will have to be transferred to phonegap_dev branch. (changes to config.xml and controllers.js and index.html)
+
+Cookies become undefined after the login page.
+
+Check on if "if (localStorageService.get(...)" even works. It does.

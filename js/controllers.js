@@ -4,84 +4,93 @@
 
 function MainCtrl($scope) {
 
-}
+} //--- End of Main Control
 
-function LoginCtrl($scope, $location, MemberDatabase, $cookies, $rootScope) {
+//--- Controller for partials/login.html
+function LoginCtrl($scope, $location, MemberDatabase, localStorageService) {
 
-  if ($cookies.user) $location.path('/following');
+  if (localStorageService.get('id_member') !== null) {$location.path('/following');}
 
+  //--- Function for Sign Up button
   $scope.signUpClick = function() {
     $location.path('/signup');
   }
 
+  //--- Function for Log In click
   $scope.memberLogin = function() {
     $scope.member = MemberDatabase.get({username:$scope.member.username, password:$scope.member.password},
       function(data){
         if (data.user) {
-          $cookies.user = $scope.member.user;
-          $cookies.firstname = $scope.member.firstname;
-          $cookies.lastname = $scope.member.lastname;
-          $cookies.id_member = data.id_member;
-          $rootScope.$broadcast('loggedin', $cookies.user);
+          localStorageService.add('user', data.user);
+          localStorageService.add('firstname', data.firstname);
+          localStorageService.add('lastname', data.lastname);
+          localStorageService.add('id_member', data.id_member);
           $location.path('/following');
         }
         else {
           $scope.member.loginErr = 'Incorrect Username/Password';
         } 
       });
-  }
-}
+    }
+} //--- End of Login Control
 
-function SignupCtrl($scope, $location, MemberDatabase, $cookies, $rootScope) {
+//--- Controller for partials/signup.html
+function SignupCtrl($scope, $location, MemberDatabase, localStorageService) {
+  if(localStorageService.get('id_member') !== null) {$location.path('/following');}
+
+  //--- Function for Sign Up button
   $scope.signUp = function() {
     MemberDatabase.get({username:$scope.member.username},
-       function(data){
+        function(data){ //check to see if username exists
          if (data.user) {
             $scope.member.signupErr = 'Username already exists';
          }
          else {
-          //create a new member
-          var pobject = new MemberDatabase(); 
-          pobject.username = $scope.member.username; 
-          pobject.password = $scope.member.password; 
-          pobject.firstname = $scope.member.firstname;
-          pobject.lastname = $scope.member.lastname;
-          pobject.email = $scope.member.email; 
-          pobject.$save( {}, function(data, headers) {
-            alert('set cookie?' + JSON.stringify(data));
-          //  $cookies.id_member = data["0"]+data["1"];
-          });
-            $cookies.user = $scope.member.username;
-            $cookies.firstname = $scope.member.firstname;
-            $cookies.lastname = $scope.member.lastname;
-            $rootScope.$broadcast('loggedin', $cookies.user);
-            $location.path('/following');             
+            //create a new member
+            var pobject = new MemberDatabase(); 
+            pobject.username = $scope.member.username; 
+            pobject.password = $scope.member.password; 
+            pobject.firstname = $scope.member.firstname;
+            pobject.lastname = $scope.member.lastname;
+            pobject.email = $scope.member.email; 
+            pobject.$save( {}, function(data, headers) {
+              localStorageService.add('user', $scope.member.username);
+              localStorageService.add('firstname', $scope.member.firstname);
+              localStorageService.add('lastname', $scope.member.lastname);
+              localStorageService.add('id_member', data.id_member);
+              alert('got ID: ? ' + localStorageService.get('id_member'));
+              $location.path('/following');  
+            });  
          }
-     });
+    });
   }
-}
+} //--- End of Sign Up Controller
 
-function FollowingCtrl($scope, $cookies, ActivityDatabase, $location, $http, FavoritesDatabase, SearchTag) {
-  if (!$cookies.user) $location.path('/login');
-  $scope.activities = ActivityDatabase.query({id:$cookies.id_member});
+function FollowingCtrl($scope, ActivityDatabase, $location, $http, FavoritesDatabase, SearchTag, localStorageService) {
+  var user_id = localStorageService.get('id_member');
+  if(user_id == null) { $location.path('/login'); }
+
+  $scope.activities = ActivityDatabase.query({id: user_id});
   $scope.isCollapsed = true;
 
-   $scope.favoriteItem = function(id) {
-    //check and see if it exists, if not insert it
-     var saveObject = new FavoritesDatabase(); 
-        saveObject.id_activity = id; 
-        saveObject.user =  $cookies.user; 
-        saveObject.$save(); 
-        
-        var button_id = 'star_' + id;
-        var img = document.getElementById(button_id);
-        img.setAttribute("src", "http://smorgasbored.com/img/icons/star_yellow.png");
+  //--- Function for the 'favorite item' star button
+  $scope.favoriteItem = function(id) {
+  //check and see if it exists, if not insert it
+   var saveObject = new FavoritesDatabase(); 
+      saveObject.id_activity = id; 
+      saveObject.user =  localStorageService.get('user'); 
+      saveObject.$save(); 
+      var button_id = 'star_' + id;
+      var img = document.getElementById(button_id);
+      img.setAttribute("src", "http://smorgasbored.com/img/icons/star_yellow.png");
   }
 
-    $scope.goToProfile = function(id) {
+  //--- Function for the profile headshot buttons
+  $scope.goToProfile = function(id) {
     $location.path('/profile/' + id);
   }
 
+  //--- Function for the Search button
   $scope.showSearch = function() {
     var search_div = $('.smorg-search');
     if (search_div.css("visibility") === "hidden") {
@@ -92,14 +101,14 @@ function FollowingCtrl($scope, $cookies, ActivityDatabase, $location, $http, Fav
     }  
   }
 
-  /* search feature */
+  //--- Search feature using Select2 
   $scope.tags = [];
   $scope.select2Options = {
     minimumInputLength: 1,
     maximumSelectionSize: 3,
     query: function(query) {
       var data = {results: []};
-      $http.get('http://smorgasbored.com/api/index.php/search_tag/' + query.term).success(function(info) {
+      $http.get('http://smorgasbored.com/Smorg-API/index.php/search_tag/' + query.term).success(function(info) {
         angular.forEach(info, function(value, key) {
           data.results.push({id: value["id_tag"], text: value["tag_text"]});
         });
@@ -117,11 +126,13 @@ function FollowingCtrl($scope, $cookies, ActivityDatabase, $location, $http, Fav
     });
     $location.path('/search_results/' + search_tags + '/' + tag_text);
   }
-  /* end search feature */
-}
+  //--- End of Search feature
 
-function CityCtrl($scope, $cookies, $location, $http, ActivityDatabase, FavoritesDatabase, SearchTag) {
- if (!$cookies.user) $location.path('/login');
+} //--- End of Following Controller
+
+function CityCtrl($scope, $location, $http, ActivityDatabase, FavoritesDatabase, SearchTag, localStorageService) {
+ if(localStorageService.get('id_member') == null) { $location.path('/login'); }
+ 
  $scope.activities = ActivityDatabase.query();
  $scope.isCollapsed = true;
  $scope.scroll = 0;
@@ -167,7 +178,7 @@ $scope.submitSearch = function(tags) {
 //check and see if it exists, if not insert it
      var saveObject = new FavoritesDatabase(); 
         saveObject.id_activity = id; 
-        saveObject.user =  $cookies.user; 
+        saveObject.user =  localStorageService.get('user'); 
         saveObject.$save(); 
         
         var button_id = 'star_' + id;
@@ -180,8 +191,8 @@ $scope.submitSearch = function(tags) {
   }
 }
 
-function ProfileCtrl($scope, $cookies, $routeParams, FavoritesDatabase, $location, ProfileDatabase, ProfileDatabaseActivity, ProfileDatabaseFollowing, FindFriend, FollowMember, UnfollowMember) {
-  if (!$cookies.user) $location.path('/login');
+function ProfileCtrl($scope, $cookies, $routeParams, FavoritesDatabase, $location, localStorageService, ProfileDatabase, ProfileDatabaseActivity, ProfileDatabaseFollowing, FindFriend, FollowMember, UnfollowMember) {
+  if(localStorageService.get('id_member') == null) { $location.path('/login'); }
   var profile_id = $routeParams.id;
   $scope.memberdata = ProfileDatabase.get({id: profile_id});
   /*$scope.activities = [
@@ -233,19 +244,22 @@ function ProfileCtrl($scope, $cookies, $routeParams, FavoritesDatabase, $locatio
   }
 }
 
-function HomeCtrl($scope, $cookies, $routeParams, $location, FavoritesDatabase, UpcomingActivities) {
-  if (!$cookies.user) $location.path('/login');
-  $scope.favorites = FavoritesDatabase.query({id: $cookies.id_member}); 
-  $scope.upcoming = UpcomingActivities.query({id: $cookies.id_member});
+function HomeCtrl($scope, $cookies, $routeParams, $location, FavoritesDatabase, UpcomingActivities, localStorageService) {
+  var id_user = localStorageService.get('id_member');
+  if(id_user == null) { $location.path('/login'); }
+  
+  $scope.favorites = FavoritesDatabase.query({id: id_user}); 
+  $scope.upcoming = UpcomingActivities.query({id: id_user});
 
   $scope.logoutClick = function() {
-    delete $cookies.user; delete $cookies.firstname; delete $cookies.lastname; delete $cookies.id_member;
+    localStorageService.clearAll();
     $location.path('/login');
   }
 }
 
-function SearchResCtrl($scope, $routeParams, $cookies, $location, SearchResults, FavoritesDatabase) {
-  if (!$cookies.user) $location.path('/login');
+function SearchResCtrl($scope, $routeParams, $cookies, $location, SearchResults, FavoritesDatabase, localStorageService) {
+  if(localStorageService.get('id_member') == null) { $location.path('/login'); }
+
   var tags = $routeParams.tag_text;
   $scope.activities = SearchResults.query({array: $routeParams.search_tags, text:tags});
   $scope.isCollapsed = true;
@@ -269,7 +283,7 @@ function SearchResCtrl($scope, $routeParams, $cookies, $location, SearchResults,
 }
 
 function PostCtrl($scope, $rootScope, localStorageService, $cookies, $location) {
-  if (!$cookies.user) $location.path('/login');
+  if(localStorageService.get('id_member') == null) { $location.path('/login'); }
   $scope.nextClick = function(data) {
     var urlStr = $scope.$parent.$parent.uploadPage;
     var urlNum = urlStr.split('/');
