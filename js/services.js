@@ -61,12 +61,6 @@ angular.module('services', ['ngResource']).
 		//var UpcomingActivities = $resource('../Smorg-API/index.php/upcoming/:id');
 		var UpcomingActivities = $resource('http://smorgasbored.com/Smorg-API/index.php/upcoming/:id');
 		return UpcomingActivities;		
-}).
-	factory('UserData', function() {
-		var myObj = {
-			val: 5
-		};
-		return myObj;
 });
 
 
