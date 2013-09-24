@@ -2,8 +2,8 @@
 
 /* Controllers */
 
-function MainCtrl($scope) {
-
+function MainCtrl($scope, UserData) {
+  alert(UserData.myObj.val);
 } //--- End of Main Control
 
 //--- Controller for partials/login.html
