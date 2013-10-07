@@ -328,10 +328,9 @@ button {
 }
 .smorg-logout-button {
 	position: absolute;
-	display: inline-block;
-	clear: both;
+	/*display: inline-block;
+	clear: both;*/
 	z-index:500;
-
 }
 
 /* Upload pages */
