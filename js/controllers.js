@@ -284,7 +284,14 @@ function SearchResCtrl($scope, $routeParams, $cookies, $location, SearchResults,
 
 function PostCtrl($scope, $rootScope, localStorageService, $cookies, $location) {
   if(localStorageService.get('id_member') == null) { $location.path('/login'); }
+
+  //Post2 photo upload page
+  var capture = navigator.device.capture;
+  alert('hello!!');
+  alert(capture.supportedImageModes);
+
   $scope.nextClick = function(data) {
+    //make this more efficient
     var urlStr = $scope.$parent.$parent.uploadPage;
     var urlNum = urlStr.split('/');
     urlNum = (urlNum[urlNum.length - 1]).split('.');
@@ -297,6 +304,7 @@ function PostCtrl($scope, $rootScope, localStorageService, $cookies, $location) 
   $scope.exitPage = function() {
     $scope.$parent.$parent.uploadPage = '';
   }
+
 }
 
 function UploadCtrl($scope, $cookies, SearchTag) {
