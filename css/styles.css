@@ -8,6 +8,10 @@
 	font-family: "PT Mono";
 	src: url(../lib/fonts/PTM55FT.ttf);
 }
+@font-face {
+	font-family: "Lato-Bold";
+	src: url(../lib/fonts/Lato-Bold.ttf);
+}
 body {
 	background-color: #f0f1f1;
 	font-family: "Lato", sans-serif;
@@ -400,39 +404,62 @@ input[type="password"].smorg-login-input {
 .smorg-post-title{
 	z-index: 21;
 	position: fixed;
-	top:85px;
+	top:34%;
 	left:20px;
-	font-size: 20px;
-}
-.smorg-post-subtitle{
-	font-size:15px;
+	font-size: 26px;
 }
 .smorg-post-input {
 	width:100%;
 	display: inline-block;
 	z-index:21;
 	position: fixed;
-	top:135px;
+	top:42%;
 }
-input.smorg-post-text-input {
+input[type="text"].smorg-post-text-input {
 	/*background: url('..http://smorgasbored.com/img/users/26.png') no-repeat;
 	background-size: contain;*/
 	background-color: #f2f2fc;
 	border-radius: 0;
 	border:none;
 	box-shadow:none;
-	font-family: "lato", sans-serif;
-	font-size: 12px;
-	height: 35px;
+	font-family: "Lato", sans-serif;
+	font-size: 14px;
+	height: 37px;
+	width: 80%;
 }
 input:focus {
 	outline: none;
 }
+.smorg-post-title-photo {
+	z-index: 21;
+	position: fixed;
+	top: 7%;
+	left:20px;
+	font-size: 26px;
+}
 .smorg-post-photo {
 	z-index: 21;
 	position: fixed;
-	top: 105px;
+	top: 20%;
+	background-color: #BCBEC0;
 	width:100%;
+}
+.smorg-photo-label {
+	width: 100%;
+	height: 100%;
+	vertical-align: middle;
+	position: absolute;
+	z-index: 21;
+	font-family: "Lato-Bold", sans-serif;
+	font-size: 12px;
+	color: white;
+}
+input[type="file"].smorg-photo-input {
+	position: absolute;
+	z-index: 21;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
 }
 
 

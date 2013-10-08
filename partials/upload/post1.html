@@ -1,22 +1,21 @@
 <div ng-controller="PostCtrl">
-<div class="smorg-post-partial">
-</div>
+	<div class="smorg-post-partial">
+	</div>
 
-<button class="smorg-post-close" ng-click="exitPage()">
-	<i class="icon-remove"></i>
-</button>
+	<button class="smorg-post-close" ng-click="exitPage()">
+		<i class="icon-remove"></i>
+	</button>
 
-<div class="smorg-post-title">
-what are you doing?<br />
-<span class="smorg-post-subtitle">&nbsp&nbsp&nbsp(what would you like to do?)</span>
-</div>
+	<div class="smorg-post-title">
+	what should we do?<br />
+	</div>
 
-<div class="smorg-post-input">
-	<center><input type="text" class="smorg-post-text-input" placeholder="e.g., Picknick at Piedmont" ng-model="activity.title"></center>
-</div>
+	<div class="smorg-post-input">
+		<center>
+			<input type="text" class="smorg-post-text-input" placeholder="e.g., Picnic at Piedmont" ng-model="activity.title">
+		</center>
+	</div>
 
-
-
-<button class="smorg-post-next" ng-click="nextClick(activity.title)">next</button>
+	<button class="smorg-post-next" ng-click="nextClick(activity.title)">next</button>
 
 </div>

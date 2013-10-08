@@ -292,9 +292,15 @@ function PostCtrl($scope, $rootScope, localStorageService, $cookies, $location) 
   if(localStorageService.get('id_member') == null) { $location.path('/login'); }
 
   //Post2 photo upload page
+  /*
   var capture = navigator.device.capture;
   alert('hello!!');
   alert(capture.supportedImageModes);
+  */
+  //post2 picture size
+  var winWidth = window.innerWidth;
+  $(".smorg-post-photo").css('height', .75*winWidth);
+  $(".smorg-photo-label").css('line-height', .75*winWidth + "px");
 
   $scope.nextClick = function(data) {
     //make this more efficient
