@@ -29,6 +29,7 @@ function LoginCtrl($scope, $location, MemberDatabase, localStorageService) {
         }
         else {
           $scope.member.loginErr = 'Incorrect Username/Password';
+          alert($scope.member.loginErr);
         } 
       });
     }
@@ -44,6 +45,7 @@ function SignupCtrl($scope, $location, MemberDatabase, localStorageService) {
         function(data){ //check to see if username exists
          if (data.user) {
             $scope.member.signupErr = 'Username already exists';
+            alert($scope.member.signupErr);
          }
          else {
             //create a new member
@@ -58,12 +60,16 @@ function SignupCtrl($scope, $location, MemberDatabase, localStorageService) {
               localStorageService.add('firstname', $scope.member.firstname);
               localStorageService.add('lastname', $scope.member.lastname);
               localStorageService.add('id_member', data.id_member);
-              alert('got ID: ? ' + localStorageService.get('id_member'));
               $location.path('/following');  
             });  
          }
     });
   }
+
+  $scope.loginClick = function() {
+    $location.path('/login');
+  }
+
 } //--- End of Sign Up Controller
 
 function FollowingCtrl($scope, ActivityDatabase, $location, $http, FavoritesDatabase, SearchTag, localStorageService) {

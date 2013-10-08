@@ -2,19 +2,24 @@
 body {background: #DB6F44;}
 </style>
 
+<div class="smorg-header-box">
+	<div class="smorg-login-title">SMORG</div>
+</div>
 
-<div class="login-box">
-	<center class="logo">SMORG<span class="logo-subtitle"> WHAT TO DO?</span></center>
+<div class="smorg-login-box">
 
-	<center>
-	{{ member.signupErr }}
-	<form id="login">
-		<input class="login-input" type="text" ng-model="member.firstname" placeholder="First Name"/><br />
-		<input class="login-input" type="text" ng-model="member.lastname" placeholder="Last Name"/><br />
-		<input class="login-input" type="text" ng-model="member.username" placeholder="Username"/><br />
-		<input class="login-input" type="text" ng-model="member.email" placeholder="Email"/><br />
-		<input class="login-input" type="password" ng-model="member.password" placeholder="Password"/><br />
-		<button class="login-button" ng-click="signUp()">SIGN UP</button>
-	</form>
-	</center>
+	<div class="smorg-signup-form">
+		<center>
+			<input class="smorg-login-input" type="text" ng-model="member.firstname" placeholder="first name"/><br />
+			<input class="smorg-login-input" type="text" ng-model="member.lastname" placeholder="last name"/><br />
+			<input class="smorg-login-input" type="text" ng-model="member.username" placeholder="username"/><br />
+			<input class="smorg-login-input" type="text" ng-model="member.email" placeholder="email"/><br />
+			<input class="smorg-login-input" type="password" ng-model="member.password" placeholder="password"/><br />
+			<button class="smorg-login-button" ng-click="signUp()"><i class="icon-signin"></i></button>
+		</center>
+	</div>
+
+	<div class="smorg-signup-button">
+		<div class="smorg-signup-button" ng-click="loginClick()">login</div>
+	</div>
 </div>

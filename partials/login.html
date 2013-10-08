@@ -7,18 +7,19 @@ body {background: #DB6F44;}
 </div>
 
 <div class="smorg-login-box">
-divtext
-	<!--
-	<center class="logo">SMORG<span class="logo-subtitle"> WHAT TO DO?</span></center>
 
-	<center>
-	{{ member.loginErr }}
-	<form id="login">
-		<input class="login-input" type="text" ng-model="member.username" placeholder="Username"/><br />
-		<input class="login-input" type="password" ng-model="member.password" placeholder="Password"/><br />
-		<button class="login-button" ng-click="memberLogin()">LOGIN</button>
-		<button class="login-button" ng-click="signUpClick()">SIGN UP</button>
-	</form>
-	</center>
--->
+	<div class="smorg-login-form">
+			<center>
+				<input class="smorg-login-input" type="text" ng-model="member.username" placeholder="username"/><br />
+				<input class="smorg-login-input" type="password" ng-model="member.password" placeholder="password"/><br />
+				<button class="smorg-login-button" ng-click="memberLogin()">
+						<i class="icon-signin"></i>
+				</button>
+			</center>
+	</div>
+
+
+	<div class="smorg-signup-button">
+		<div class="smorg-signup-button" ng-click="signUpClick()">sign up</div>
+	</div>
 </div>
