@@ -298,9 +298,15 @@ function PostCtrl($scope, $rootScope, localStorageService, $cookies, $location) 
   alert(capture.supportedImageModes);
   */
   //post2 picture size
+  $scope.newimage = '';
   var winWidth = window.innerWidth;
-  $(".smorg-post-photo").css('height', .75*winWidth);
-  $(".smorg-photo-label").css('line-height', .75*winWidth + "px");
+  var photoHeight = .75*winWidth;
+  $(".smorg-post-photo").css('height', photoHeight);
+  $(".smorg-photo-label").css('line-height', photoHeight + "px");
+  $("#resize_input").attr("resize-max-width", winWidth);  
+  $("#resize_input").attr("resize-max-height", photoHeight);
+  // $scope.maxWidth = winWidth;
+  // $scope.maxHeight = photoHeight;
 
   $scope.nextClick = function(data) {
     //make this more efficient

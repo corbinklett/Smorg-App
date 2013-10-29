@@ -1,26 +1,30 @@
 <div ng-controller="PostCtrl">
 	<div class="smorg-post-partial">
 	</div>
-
+	
 	<button class="smorg-post-close" ng-click="exitPage()">
 		<i class="icon-remove"></i>
 	</button>
 
 
 	<div class="smorg-post-title-photo">
-	what does it look like?
+	what does it look like
 	</div>
-
-
-
 
 	<div class="smorg-post-photo"> 
-		<div class="smorg-photo-label">
-			<input class="smorg-photo-input" type="file" name="file" accept="image/*" capture="camera" />
+<!-- 		<div class="smorg-photo-label">
 			<center><i class="icon-camera" style="font-size:18px;"></i>&nbsp&nbsp&nbsp&nbspGET PHOTOGRAPH</center>
-		</div>
+		</div> -->
+
+			<input class="smorg-photo-input" type="file" accept="image/*" capture="camera" placeimage="newimage" />
+
+			<img class="smorg-show-image" src="{{ newimage.url }}" draggable="vertical" />
+
 	</div>
 
-	<button class="smorg-post-next" ng-click="nextClick()">next</button>
+	<button class="smorg-post-next" ng-click="nextClick(image2.resized)">next</button>
 
 </div>
+
+
+
