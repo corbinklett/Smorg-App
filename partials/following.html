@@ -1,4 +1,5 @@
 <ng-include src="uploadPage"></ng-include>
+<ng-include src="searchPage"></ng-include>
 
 <div class="smorg-navbar">
 	<div class="smorg-item"><a href="#/city">city</a></div>
@@ -36,19 +37,7 @@
 
 </div>
 
-<!--div for search -->
-<div class="smorg-search">
-
-	<div class='container-fluid'>
-		<!--<input type="text" ng-model="tag" ng-change="searchTag()">-->
-
-		<input type="hidden" ui-select2="select2Options" multiple ng-model="tags" style="width:180px" data-placeholder="Good For...">
-		<button ng-click="submitSearch(tags)">search</button>
-	</div>
-
-</div>
-
 <div class="smorg-footmenu">
 	<div class="smorg-item smorg-foot smorg-foot-left" ng-click="uploadPage='partials/upload/post1.html'"><i class="icon-camera"></i> &nbsp SHARE</div>
-	<div class="smorg-item smorg-foot" ng-click="showSearch()"><i class="icon-search"></i> &nbsp SEARCH</div>
+	<div class="smorg-item smorg-foot" ng-click="searchPage='partials/search/search.html'"><i class="icon-search"></i> &nbsp SEARCH</div>
 </div>

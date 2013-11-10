@@ -1,28 +1,29 @@
 <div ng-controller="PostCtrl">
-	<div class="smorg-post-partial">
-	</div>
+	<div class="smorg-overlay-partial">
 	
-	<button class="smorg-post-close" ng-click="exitPage()">
-		<i class="icon-remove"></i>
-	</button>
+		<button class="smorg-overlay-close" ng-click="exitPage()">
+		</button>
 
 
-	<div class="smorg-post-title-photo">
-	what does it look like
+		<div class="smorg-overlay-title">
+		what does it look like
+		</div>
+
+		<div class="smorg-post-photo"> 
+	<!-- 		<div class="smorg-photo-label">
+				<center><i class="icon-camera" style="font-size:18px;"></i>&nbsp&nbsp&nbsp&nbspGET PHOTOGRAPH</center>
+			</div> -->
+
+				<input class="smorg-photo-input" type="file" accept="image/*" capture="camera" placeimage="newimage" /> <!-- make sure placeimage="newimage" -->
+
+				<!-- <canvas class="smorg-show-image" id="uploadimg"></canvas> -->
+				<img class="smorg-show-image" id="postimg" src="{{ newimage.url }}" draggable />
+				<!-- {{ newimage.text }} <br/> -->
+		</div>
+
+		<button class="smorg-overlay-footbutton" ng-click="nextClick(newimage)">next</button>
+
 	</div>
-
-	<div class="smorg-post-photo"> 
-<!-- 		<div class="smorg-photo-label">
-			<center><i class="icon-camera" style="font-size:18px;"></i>&nbsp&nbsp&nbsp&nbspGET PHOTOGRAPH</center>
-		</div> -->
-
-			<input class="smorg-photo-input" type="file" accept="image/*" capture="camera" placeimage="newimage" />
-
-			<img class="smorg-show-image" src="{{ newimage.url }}" draggable="vertical" />
-
-	</div>
-
-	<button class="smorg-post-next" ng-click="nextClick(image2.resized)">next</button>
 
 </div>
 

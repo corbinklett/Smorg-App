@@ -1,5 +1,43 @@
 <div>
 
+        <select>
+           <option selected="selected" value="100">100</option>
+           <option value="200">200</option>
+           <option value="300">300</option>
+           <option value="400">400</option>
+        </select>
+        <input type="text" name="" value="">
+        <p>value:</p>
+
+        <script>
+        var $input = $('input');
+var $select = $('select');
+ 
+$select.change(function(){
+ modify();
+})
+ 
+function modify(){
+ $input.val($select.val());
+ output();
+}
+ 
+function output(){
+ $('p').text('value: ' + $input.val());
+}
+ 
+$input.on('click', function(){
+ $(this).select()
+}).on('blur', function(){
+ output();
+})
+ 
+modify();
+</script>
+
+
+
+
    <form ng-upload action="api/index.php/post_activity">
        <p>
            <label>Title:</label>

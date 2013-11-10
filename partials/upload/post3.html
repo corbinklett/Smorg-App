@@ -1,19 +1,27 @@
 <div ng-controller="PostCtrl">
-<div class="smorg-post-partial">
-</div>
+	<div class="smorg-overlay-partial">
+	
 
-<button class="smorg-post-close" ng-click="exitPage()">
-	<i class="icon-remove"></i>
-</button>
+		<button class="smorg-overlay-close" ng-click="exitPage()">
+		</button>
 
-<div class="smorg-post-title">
-what is it good for?
-</div>
+		<div class="smorg-overlay-title">
+			what is it good for?
+		</div>
 
-<div class="smorg-post-input">
-	<center><input type="text" class="smorg-post-text-input" placeholder="goodfor sample" ng-model="activity.goodfor"></center>
-</div>
+		<div class="smorg-overlay-select2-area">
+			<center><input type="hidden" ui-select2="select2Options" multiple data-placeholder="good for..." style="width:180px" ng-model="activity.tags"></center>
 
-<button class="smorg-post-next" ng-click="nextClick(activity.goodfor)">next</button>
+			<ul class="smorg-choice-set">
+				<li class="smorg-choice-box" ng-repeat="tag in activity.tags">
+					{{tag.text}} <button class="smorg-choice-button" ng-click="clearChoice(tag.id)">x</button>
+				</li>
+			</ul>
+
+		</div>
+
+		<button class="smorg-overlay-footbutton" ng-click="postActivity(activity.tags)">share!</button>
+
+	</div>
 
 </div>

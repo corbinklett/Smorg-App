@@ -96,44 +96,6 @@ function FollowingCtrl($scope, ActivityDatabase, $location, $http, FavoritesData
     $location.path('/profile/' + id);
   }
 
-  //--- Function for the Search button
-  $scope.showSearch = function() {
-    var search_div = $('.smorg-search');
-    if (search_div.css("visibility") === "hidden") {
-      search_div.css("visibility","visible");
-    }
-    else {
-      search_div.css("visibility","hidden");
-    }  
-  }
-
-  //--- Search feature using Select2 
-  $scope.tags = [];
-  $scope.select2Options = {
-    minimumInputLength: 1,
-    maximumSelectionSize: 3,
-    query: function(query) {
-      var data = {results: []};
-      $http.get('http://smorgasbored.com/Smorg-API/index.php/search_tag/' + query.term).success(function(info) {
-        angular.forEach(info, function(value, key) {
-          data.results.push({id: value["id_tag"], text: value["tag_text"]});
-        });
-      query.callback(data); 
-      });
-    }  
-  }
-
-  $scope.submitSearch = function(tags) {
-    var search_tags = [];
-    var tag_text = [];
-    angular.forEach(tags, function(value, key) {
-      search_tags.push(value["id"]);
-      tag_text.push(value["text"]);
-    });
-    $location.path('/search_results/' + search_tags + '/' + tag_text);
-  }
-  //--- End of Search feature
-
 } //--- End of Following Controller
 
 function CityCtrl($scope, $location, $http, ActivityDatabase, FavoritesDatabase, SearchTag, localStorageService) {
@@ -151,32 +113,6 @@ function CityCtrl($scope, $location, $http, ActivityDatabase, FavoritesDatabase,
   else {
     search_div.css("visibility","hidden");
   }
-}
-
-$scope.tags = [];
-
-$scope.select2Options = {
-  minimumInputLength: 1,
-  maximumSelectionSize: 3,
-  query: function(query) {
-    var data = {results: []};
-    $http.get('http://smorgasbored.com/api/index.php/search_tag/' + query.term).success(function(info) {
-      angular.forEach(info, function(value, key) {
-        data.results.push({id: value["id_tag"], text: value["tag_text"]});
-      });
-    query.callback(data); 
-    });
-  }  
-}
-
-$scope.submitSearch = function(tags) {
-  var search_tags = [];
-  var tag_text = [];
-  angular.forEach(tags, function(value, key) {
-    search_tags.push(value["id"]);
-    tag_text.push(value["text"]);
-  });
-  $location.path('/search_results/' + search_tags + '/' + tag_text);
 }
 
   $scope.favoriteItem = function(id) {
@@ -288,25 +224,20 @@ function SearchResCtrl($scope, $routeParams, $cookies, $location, SearchResults,
   }
 }
 
-function PostCtrl($scope, $rootScope, localStorageService, $cookies, $location) {
+function PostCtrl($scope, $rootScope, localStorageService, $cookies, $location, $http) {
   if(localStorageService.get('id_member') == null) { $location.path('/login'); }
 
   //Post2 photo upload page
-  /*
-  var capture = navigator.device.capture;
-  alert('hello!!');
-  alert(capture.supportedImageModes);
-  */
-  //post2 picture size
-  $scope.newimage = '';
+
   var winWidth = window.innerWidth;
   var photoHeight = .75*winWidth;
   $(".smorg-post-photo").css('height', photoHeight);
   $(".smorg-photo-label").css('line-height', photoHeight + "px");
   $("#resize_input").attr("resize-max-width", winWidth);  
   $("#resize_input").attr("resize-max-height", photoHeight);
-  // $scope.maxWidth = winWidth;
-  // $scope.maxHeight = photoHeight;
+
+
+// ---end photo upload page
 
   $scope.nextClick = function(data) {
     //make this more efficient
@@ -314,16 +245,130 @@ function PostCtrl($scope, $rootScope, localStorageService, $cookies, $location) 
     var urlNum = urlStr.split('/');
     urlNum = (urlNum[urlNum.length - 1]).split('.');
     urlNum = urlNum[0].replace(/^\D+/g, '');
-    localStorageService.add(urlNum, data);
+    localStorageService.add("activity" + urlNum, data);
     urlNum++;
     $scope.$parent.$parent.uploadPage = "partials/upload/post" + urlNum + ".html";
+  }
+
+  $scope.postActivity = function(data) { //posts user inputs about activity to database and saves photo on server
+    //save tags in local storage
+    var urlStr = $scope.$parent.$parent.uploadPage;
+    var urlNum = urlStr.split('/');
+    urlNum = (urlNum[urlNum.length - 1]).split('.');
+    urlNum = urlNum[0].replace(/^\D+/g, '');
+    localStorageService.add("activity" + urlNum, data);
+
+    // post local storage info to server
+    var postData = {
+      'title': localStorageService.get('activity1'),
+      'image': localStorageService.get('activity2'),
+      'tags': localStorageService.get('activity3')
+    };
+
+    $http({
+      method:'POST', 
+      url:'testpost.php',
+      data:postData, 
+    }).
+      success(function(response) {
+        localStorageService.remove('activity1');
+        localStorageService.remove('activity2');
+        localStorageService.remove('activity3');
+      }).
+      error(function(response) {
+        console.log('error');
+      });
   }
   
   $scope.exitPage = function() {
     $scope.$parent.$parent.uploadPage = '';
   }
 
+
+  // ---for tags page
+  //$scope.activity.tags = [];
+
+  $scope.select2Options = {
+    minimumInputLength: 1,
+    maximumSelectionSize: 4,
+    query: function(query) {
+      var data = {results: []};
+      $http.get('http://smorgasbored.com/Smorg-API/index.php/search_tag/' + query.term).success(function(info) {
+        angular.forEach(info, function(value, key) {
+          data.results.push({id: value["id_tag"], text: value["tag_text"]});
+        });
+      query.callback(data); 
+      });
+    },
+    dropdownCssClass: "testclass"
+  }
+
+  $scope.clearChoice = function(tagid) {
+    var deleteIndex;
+    var index = 0;
+    angular.forEach($scope.activity.tags, function(value, key) {
+      if (value["id"] == tagid) {
+        deleteIndex = index;
+      }
+      index++;
+    });
+    $scope.activity.tags.splice(deleteIndex,1);
+  }
+
+  // ---end tags page
+
 }
+
+function SearchCtrl($scope, $http, $location) {
+  
+  $scope.exitPage = function() {
+    $scope.$parent.$parent.searchPage = '';
+  }
+
+  // --- code for Choices ---//
+  $scope.tags = [];
+
+  $scope.select2Options = {
+    minimumInputLength: 1,
+    maximumSelectionSize: 4,
+    query: function(query) {
+      var data = {results: []};
+      $http.get('http://smorgasbored.com/Smorg-API/index.php/search_tag/' + query.term).success(function(info) {
+        angular.forEach(info, function(value, key) {
+          data.results.push({id: value["id_tag"], text: value["tag_text"]});
+        });
+      query.callback(data); 
+      });
+    },
+    dropdownCssClass: "testclass"
+  }
+
+  $scope.clearChoice = function(tagid) {
+    var deleteIndex;
+    var index = 0;
+    angular.forEach($scope.tags, function(value, key) {
+      if (value["id"] == tagid) {
+        deleteIndex = index;
+      }
+      index++;
+    });
+    $scope.tags.splice(deleteIndex,1);
+  }
+
+  // --- end code for Choices ---//
+
+  $scope.submitSearch = function(tags) {
+    var search_tags = [];
+    var tag_text = [];
+    angular.forEach(tags, function(value, key) {
+      search_tags.push(value["id"]);
+      tag_text.push(value["text"]);
+    });
+    $location.path('/search_results/' + search_tags + '/' + tag_text);
+  }
+
+}
+
 
 function UploadCtrl($scope, $cookies, SearchTag) {
     $scope.id_member = $cookies.id_member;

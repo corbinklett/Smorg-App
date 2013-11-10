@@ -478,13 +478,15 @@ disabled look for disabled choices in the results dropdown
 /* multiselect */
 
 .select2-container-multi .select2-choices {
+    /* Corbin edits */
     height: auto !important;
     height: 1%;
     margin: 0;
     padding: 0;
     position: relative;
 
-    border: 1px solid #aaa;
+    /*border: 1px solid #aaa;*/
+    border: none;
     cursor: text;
     overflow: hidden;
 
@@ -678,3 +680,4 @@ disabled look for disabled choices in the results dropdown
       background-position: 100% -21px !important;
   }
 }
+

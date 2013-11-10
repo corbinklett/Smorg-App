@@ -1,0 +1,32 @@
+<div ng-controller="SearchCtrl">
+
+
+<div class="smorg-overlay-partial">
+
+	<button class="smorg-overlay-close" ng-click="exitPage()">
+
+	</button>
+
+	<div class="smorg-overlay-title">
+		explore the city.<br />
+	</div>
+
+	<div class="smorg-overlay-select2-area">
+
+		<center><input type="hidden" ui-select2="select2Options" multiple ng-model="tags" style="width:180px" data-placeholder="good for..."></center>
+		
+		<ul class="smorg-choice-set">
+			<li class="smorg-choice-box" ng-repeat="tag in tags">
+				{{tag.text}} <button class="smorg-choice-button" ng-click="clearChoice(tag.id)">x</button>
+			</li>
+		</ul>
+
+	</div>
+
+	<button class="smorg-overlay-footbutton" ng-click="submitSearch(tags)">search</button>
+
+</div>
+
+
+
+</div>
