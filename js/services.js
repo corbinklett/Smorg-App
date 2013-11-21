@@ -61,6 +61,14 @@ angular.module('services', ['ngResource']).
 		//var UpcomingActivities = $resource('../Smorg-API/index.php/upcoming/:id');
 		var UpcomingActivities = $resource('http://smorgasbored.com/Smorg-API/index.php/upcoming/:id');
 		return UpcomingActivities;		
+}).
+	factory('SingleActivity', function($resource) {
+		var SingleActivity = $resource('http://smorgasbored.com/Smorg-API/index.php/single_activity/:id');
+		return SingleActivity;
+}).
+	factory('ShareActivity', function($resource) {
+		var ShareActivity = $resource('http://smorgasbored.com/Smorg-API/index.php/share_activity');
+		return ShareActivity;
 });
 
 

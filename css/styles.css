@@ -295,10 +295,12 @@ input[type="password"].smorg-login-input {
 }
 .smorg-profile-title {
 	z-index: 3;
-	bottom: 0;
+	top: 10%;
+	padding-left: 5px;
+	padding-right: 5px;
+	color: rgb(40,40,40);
 	position: absolute;
-	background-color: rgba(230,230,230,.7);
-	width: 100%;
+	background-color: rgba(230,230,230,.7);;
 }
 .smorg-profile-user-following {
 	position: relative;
@@ -366,10 +368,50 @@ input[type="password"].smorg-login-input {
 	left:20px;
 	font-size: 26px;
 }
+.smorg-overlay-title-share {
+	position: relative;
+	font-family: "Lato", sans-serif;
+	font-size: 24px;
+	margin-left: 15px;
+	margin-top: 15px;
+	clear: both;
+}
+.smorg-overlay-image-div {
+	margin-top: 55px;
+	width: 100%;
+	clear: both;
+}
+.smorg-overlay-image {
+	max-height: 200px;
+}
+.smorg-overlay-share-textarea-div {
+	width: 100%;
+	margin-top: 25px;
+	clear: both;
+}
+.smorg-overlay-share-textarea {
+	position: relative;
+	background-color: #f2f2fc;
+	border-radius: 0;
+	border:none;
+	resize:none;
+	box-shadow:none;
+	font-family: "Lato", sans-serif;
+	font-size: 14px;
+	height: 80px;
+	width: 80%;
+	max-width: 267px;
+	overflow: hidden; /*disables scrollbar*/
+}
 .smorg-overlay-select2-area {
 	width: 100%;
 	top: 34%;
 	position: absolute;
+}
+.smorg-overlay-select2-area-share {
+	width: 100%;
+	position: relative;
+	margin-top: 15px;
 }
 .smorg-choice-set {
 	margin-left: auto;
@@ -455,7 +497,7 @@ input[type="text"].smorg-post-text-input {
 	width:100%;
 	overflow: hidden;
 }
-/*.smorg-photo-label {
+.smorg-photo-label {
 	width: 100%;
 	height: 100%;
 	vertical-align: middle;
@@ -464,7 +506,7 @@ input[type="text"].smorg-post-text-input {
 	font-family: "Lato-Bold", sans-serif;
 	font-size: 12px;
 	color: white;
-}*/
+}
 input[type="file"].smorg-photo-input {
 	position: absolute;
 	z-index: 21;

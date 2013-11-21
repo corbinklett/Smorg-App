@@ -1,0 +1,35 @@
+<div ng-controller="ShareCtrl">
+
+	<div class="smorg-overlay-partial">
+
+		<button class="smorg-overlay-close" ng-click="exitPage()">
+		</button>
+
+		<div class="smorg-overlay-image-div"><center><img class="smorg-overlay-image" src="http://smorgasbored.com/img/activity/{{ sharedActivityId }}.png"></center></div>
+
+		<div class="smorg-overlay-title-share">
+			what say you?
+		</div>
+
+		<div class="smorg-overlay-share-textarea-div">
+			<center><textarea class="smorg-overlay-share-textarea" maxlength="300" ng-model="message">
+			</textarea></center>
+		</div>
+
+<!-- 		<div class="smorg-overlay-select2-area-share">
+
+			<center><input type="hidden" ui-select2="select2Options" multiple ng-model="invitees" style="width:180px" data-placeholder="choose wisely..."></center>
+			
+			<ul class="smorg-choice-set">
+				<li class="smorg-choice-box" ng-repeat="invitee in invitees">
+					{{invitee.text}} <button class="smorg-choice-button" ng-click="clearChoice(invitee.id)">x</button>
+				</li>
+			</ul>
+
+		</div> -->
+
+		<button class="smorg-overlay-footbutton" ng-click="shareActivity(message)">send!</button>
+
+	</div>
+
+</div>

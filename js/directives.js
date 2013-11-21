@@ -62,16 +62,28 @@ angular.module('directives', [])
 
 	   			var imgWidth = evt.target.width;
 	   			var imgHeight = evt.target.height;
+
+	   			var botCutoffPct = Math.abs(1 - (imgHeight/divHeight));
+	   			var rightCutoffPct = Math.abs(1 - (imgWidth/divWidth));
+
 	   			var aspectRatio = imgHeight/imgWidth;
 
-	   			 if( aspectRatio >= 0.75 ) {
-	   			  	 element.css('width', '100%');	//move axis is vertical
-	   			  	 moveAxis = "vertical";
-	   			 }
-	   			 else {
+	   			if( aspectRatio >= 0.75 ) {
+	   			  	element.css('width', '100%');	//move axis is vertical
+	   			  	moveAxis = "vertical";
+	   			}
+	   			else {
 	   			 	element.css('height', '100%'); //move axis is horizontal
 	   			 	moveAxis = "horizontal";
-	   			 }
+	   			}
+
+	   			scope.$apply(function() {
+			    	scope.newimage.moveAxis = moveAxis;
+	        		scope.newimage.topCutoffPct = topCutoffPct;
+	        		scope.newimage.botCutoffPct = botCutoffPct;
+	        		scope.newimage.leftCutoffPct = leftCutoffPct;
+	        		scope.newimage.rightCutoffPct = rightCutoffPct;
+	        	});
 	   			 
 	   		});
 
@@ -157,3 +169,4 @@ angular.module('directives', [])
       }
     };
   });
+

@@ -16,6 +16,7 @@ smorg.config(['$routeProvider', function($routeProvider) {
     when('/home', {templateUrl: 'partials/home.html', controller: HomeCtrl}).    
     when('/search_results/:search_tags/:tag_text', {templateUrl: 'partials/search_results.html', controller:SearchResCtrl}).
     when('/upload', {templateUrl: 'partials/upload.html', controller: UploadCtrl}).
+    when('/activity/:id', {templateUrl: 'partials/activity.html', controller: ActivityCtrl}).
     otherwise({redirectTo: '/following'});
 }]);
 

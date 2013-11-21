@@ -11,6 +11,14 @@ function LoginCtrl($scope, $location, MemberDatabase, localStorageService) {
 
   if (localStorageService.get('id_member') !== null) {$location.path('/following');}
 
+  // --- Temporary for testing
+          localStorageService.add('user', 'corbinklett');
+          localStorageService.add('firstname', 'Corbin');
+          localStorageService.add('lastname', 'Klett');
+          localStorageService.add('id_member', 26);
+          $location.path('/following');
+
+
   //--- Function for Sign Up button
   $scope.signUpClick = function() {
     $location.path('/signup');
@@ -96,6 +104,11 @@ function FollowingCtrl($scope, ActivityDatabase, $location, $http, FavoritesData
     $location.path('/profile/' + id);
   }
 
+  $scope.toSharePage = function(id) {
+    localStorageService.add('id_activity_shared', id);
+    $scope.sharePage = "partials/share/share.html";
+  }
+
 } //--- End of Following Controller
 
 function CityCtrl($scope, $location, $http, ActivityDatabase, FavoritesDatabase, SearchTag, localStorageService) {
@@ -133,7 +146,7 @@ function CityCtrl($scope, $location, $http, ActivityDatabase, FavoritesDatabase,
   }
 }
 
-function ProfileCtrl($scope, $cookies, $routeParams, FavoritesDatabase, $location, localStorageService, ProfileDatabase, ProfileDatabaseActivity, ProfileDatabaseFollowing, FindFriend, FollowMember, UnfollowMember) {
+function ProfileCtrl($scope, $routeParams, FavoritesDatabase, $location, localStorageService, ProfileDatabase, ProfileDatabaseActivity, ProfileDatabaseFollowing, FindFriend, FollowMember, UnfollowMember) {
   if(localStorageService.get('id_member') == null) { $location.path('/login'); }
   var profile_id = $routeParams.id;
   $scope.memberdata = ProfileDatabase.get({id: profile_id});
@@ -157,8 +170,9 @@ function ProfileCtrl($scope, $cookies, $routeParams, FavoritesDatabase, $locatio
     {"id_member_friend": "32"}
   ]; */
   //determine whose profile this is for follow button
-  FindFriend.get({myId: $cookies.id_member, visitingId: profile_id}, function(data) {
-    if (profile_id == $cookies.id_member) {
+  var visitorId = localStorageService.get('id_member');
+  FindFriend.get({myId: visitorId, visitingId: profile_id}, function(data) {
+    if (profile_id == visitorId) {
       $scope.whoami = [];
     }
     else if (data.id_member_friend == profile_id) {
@@ -172,7 +186,7 @@ function ProfileCtrl($scope, $cookies, $routeParams, FavoritesDatabase, $locatio
   $scope.followMember = function() {
     $scope.whoami = "following";
     var pobject = new FollowMember(); 
-    pobject.id_member = $cookies.id_member; 
+    pobject.id_member = visitorId; 
     pobject.id_member_friend = profile_id;  
     pobject.$save();
 
@@ -180,10 +194,15 @@ function ProfileCtrl($scope, $cookies, $routeParams, FavoritesDatabase, $locatio
   $scope.unfollowMember = function() {
     $scope.whoami = "notfollowing";
     var pobject = new UnfollowMember(); 
-    pobject.id_member = $cookies.id_member; 
+    pobject.id_member = visitorId; 
     pobject.id_member_friend = profile_id;  
     pobject.$save();
   }
+
+  $scope.activityClick = function(activity) {
+    $location.path('/activity/' + activity.id_activity);
+  }
+
 }
 
 function HomeCtrl($scope, $cookies, $routeParams, $location, FavoritesDatabase, UpcomingActivities, localStorageService) {
@@ -224,7 +243,7 @@ function SearchResCtrl($scope, $routeParams, $cookies, $location, SearchResults,
   }
 }
 
-function PostCtrl($scope, $rootScope, localStorageService, $cookies, $location, $http) {
+function PostCtrl($scope, $rootScope, localStorageService, $location, $http) {
   if(localStorageService.get('id_member') == null) { $location.path('/login'); }
 
   //Post2 photo upload page
@@ -262,12 +281,13 @@ function PostCtrl($scope, $rootScope, localStorageService, $cookies, $location, 
     var postData = {
       'title': localStorageService.get('activity1'),
       'image': localStorageService.get('activity2'),
-      'tags': localStorageService.get('activity3')
+      'tags': localStorageService.get('activity3'),
+      'user': localStorageService.get('id_member')
     };
 
     $http({
       method:'POST', 
-      url:'testpost.php',
+      url:'http://smorgasbored.com/Smorg-API/smorg_post_activity.php',
       data:postData, 
     }).
       success(function(response) {
@@ -278,6 +298,8 @@ function PostCtrl($scope, $rootScope, localStorageService, $cookies, $location, 
       error(function(response) {
         console.log('error');
       });
+
+    $scope.$parent.$parent.uploadPage = ''; //get rid of post pages
   }
   
   $scope.exitPage = function() {
@@ -286,8 +308,6 @@ function PostCtrl($scope, $rootScope, localStorageService, $cookies, $location, 
 
 
   // ---for tags page
-  //$scope.activity.tags = [];
-
   $scope.select2Options = {
     minimumInputLength: 1,
     maximumSelectionSize: 4,
@@ -300,7 +320,12 @@ function PostCtrl($scope, $rootScope, localStorageService, $cookies, $location, 
       query.callback(data); 
       });
     },
-    dropdownCssClass: "testclass"
+    dropdownCssClass: "testclass",
+    createSearchChoice: function(term, query) { 
+          console.log(query);
+          return {id:term, text:term};
+    },
+    tokenSeparators: [',', ' ']
   }
 
   $scope.clearChoice = function(tagid) {
@@ -369,7 +394,122 @@ function SearchCtrl($scope, $http, $location) {
 
 }
 
+function ShareCtrl($scope, $http, $location, $rootScope, localStorageService, ShareActivity) {
+  $scope.exitPage = function() {
+    $scope.$parent.$parent.sharePage = '';
+  }
 
+  $scope.sharedActivityId = localStorageService.get('id_activity_shared');
+
+
+  // --- code for Choices ---//
+  $scope.invitees = [];
+
+  var currentUser = localStorageService.get('id_member');
+  $scope.select2Options = {
+    minimumInputLength: 1,
+    maximumSelectionSize: 20,
+    query: function(query) {
+      var data = {results: []};
+      $http.get('http://smorgasbored.com/Smorg-API/index.php/search_friends/' + currentUser + '/' + query.term).success(function(info) {
+        angular.forEach(info, function(value, key) {
+          data.results.push({id: value["id_member"], text: value["user"]});
+        });
+      query.callback(data); 
+      });
+    },
+    dropdownCssClass: "testclass"
+  }
+
+  $scope.clearChoice = function(inviteeId) {
+    var deleteIndex;
+    var index = 0;
+    angular.forEach($scope.invitees, function(value, key) {
+      if (value["id"] == inviteeId) {
+        deleteIndex = index;
+      }
+      index++;
+    });
+    $scope.invitees.splice(deleteIndex,1);
+  }
+  // --- end code for Choices ---//
+
+  $scope.nextClick = function(invitees) {
+    localStorageService.add('invitees', invitees);
+    $scope.$parent.$parent.sharePage = "partials/share/share2.html";
+  }
+
+  $scope.shareActivity = function(message) {
+    //share activity/conversation then delete local storage items
+    var invitees = localStorageService.get('invitees');
+    var id_activity_shared = localStorageService.get('id_activity_shared');
+    var invitee_ids = [];
+
+    //just get ID's of invitees 
+    angular.forEach(invitees, function(value, key) {
+      invitee_ids.push(parseInt(value["id"]));
+    });
+
+    //save shared activity data in database
+    var pobject = new ShareActivity(); 
+    pobject.invitee_ids = invitee_ids; 
+    pobject.id_activity_shared = id_activity_shared; 
+    pobject.message = message;
+    pobject.$save( {}, function(data, headers) {
+      localStorageService.remove('invitees');
+      localStorageService.remove('id_activity_shared');
+      $scope.$parent.$parent.sharePage = ''; //get rid of share pages
+      $location.path('/following');  
+    });  
+  }
+
+  // $scope.submitSearch = function(tags) {
+  //   var search_tags = [];
+  //   var tag_text = [];
+  //   angular.forEach(tags, function(value, key) {
+  //     search_tags.push(value["id"]);
+  //     tag_text.push(value["text"]);
+  //   });
+  //   $location.path('/search_results/' + search_tags + '/' + tag_text);
+  // }
+
+}
+
+function ActivityCtrl($scope, localStorageService, SingleActivity, $routeParams, SearchResults, $location) {
+  if(localStorageService.get('id_member') == null) { $location.path('/login'); }
+  //page that show selected activity and similar activities
+  $scope.activity = [];
+  $scope.activity.tags = [];
+
+  SingleActivity.query({id: $routeParams.id}, function(data) {
+    $scope.activity.id_activity = data[0].id_activity;
+    $scope.activity.title = data[0].title;
+    angular.forEach(data, function(value, key) {
+      $scope.activity.tags.push({"tag_text": value["tag_text"], "id_tag": value["id_tag"]});
+    });
+
+    //get list of similar activities and their tags based off of tags extracted above
+    var id_array = [];
+    var text_array = [];
+    angular.forEach($scope.activity.tags, function(value, key) {
+      id_array.push(value["id_tag"]);
+      text_array.push(value["tag_text"]);
+    });
+    
+    //don't repeat an activity!
+    $scope.similarActivities = [];
+    SearchResults.query({array: id_array, text:text_array}, function(data) {
+      angular.forEach(data, function(value, key) {
+        if (value["id_activity"] !== $scope.activity.id_activity) {
+          $scope.similarActivities.push(value);
+        }
+      });
+    });
+  });
+
+}
+
+// --- Experimental Upload Control
 function UploadCtrl($scope, $cookies, SearchTag) {
     $scope.id_member = $cookies.id_member;
 

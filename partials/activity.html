@@ -1,24 +1,39 @@
-<ng-include src="uploadPage"></ng-include>
-<ng-include src="searchPage"></ng-include>
-<ng-include src="sharePage"></ng-include>
-
 <div class="smorg-navbar">
-	<div class="smorg-item"><a href="#/city">city</a></div>
-	<div class="smorg-item smorg-active"><a href="#/following">following</a></div>
-	<div class="smorg-item"><a href="#/home">home</a></div>
+	<div class="back-button-div" onclick="history.back()"><button class="back-button"><img src="http://smorgasbored.com/img/icons/back.png" class="back-button-img"></button></div>
+  <div class="profile-menu">{{ memberdata.user }}</div>
 </div>
+
+
+{{activity.id_activity}}
+asdg
+{{activity.title}}
+
+<div ng-repeat="tag in activity.tags">
+	{{tag.tag_text}}
+</div>
+
+
+Similar activities
 
 <div class="activity-container">
 
-<article ng-repeat="activity in activities">
+<article ng-repeat="activity in similarActivities">
 	<div class="activity">
 		<img src="http://smorgasbored.com/img/activity/{{ activity.id_activity }}.png" ng-click="isCollapsed=!isCollapsed">
 		<div class="button-group">
 			<button class="activity-button" ng-click="favoriteItem(activity.id_activity)"><img src="http://smorgasbored.com/img/icons/star.png" id="star_{{ activity.id_activity }}"></button>
-			<!--<button class="activity-button"><img src="http://smorgasbored.com/img/icons/share.png"></button>-->
-			<div class="activity-button" ng-click="toSharePage(activity.id_activity)">
+			<!--<button class="activity-button"><img src="img/icons/share.png"></button>-->
+
+			<button class="activity-button dropdown-toggle">
 				<img src="http://smorgasbored.com/img/icons/share.png">
-			</div>
+			</button>
+
+			<div class="dropdown-menu send-div">
+  				<label>Share With</label><input type="text" placeholder="Enter friends' names.">
+  				<label>Message</label><input type="text">
+  				<button class="post-submit smorg-button">SEND!</button>
+  			</div>
+
 
 			<button class="profile-pic" ng-click="goToProfile(activity.id_member)"><img src="http://smorgasbored.com/img/users/{{ activity.id_member }}.png"></button>
 		</div>
@@ -30,9 +45,4 @@
 	</div>
 </article>
 
-</div>
-
-<div class="smorg-footmenu">
-	<div class="smorg-item smorg-foot smorg-foot-left" ng-click="uploadPage='partials/upload/post1.html'"><i class="icon-camera"></i> &nbsp SHARE</div>
-	<div class="smorg-item smorg-foot" ng-click="searchPage='partials/search/search.html'"><i class="icon-search"></i> &nbsp SEARCH</div>
 </div>

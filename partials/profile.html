@@ -1,6 +1,6 @@
 <div class="smorg-navbar">
 	<div class="back-button-div" onclick="history.back()"><button class="back-button"><img src="http://smorgasbored.com/img/icons/back.png" class="back-button-img"></button></div>
-  <div class="profile-menu">@{{ memberdata.user }}</div>
+  <div class="profile-menu">{{ memberdata.user }}</div>
 </div>
 
 <div class="person-container">
@@ -20,13 +20,23 @@
 
 <div class="profile-activities-container">
 	<div class="activity-heading">
-		THINGS
+		ADVENTURES/THINGS
 	</div>
 	<div class="activity-contents">
-		<div class="smorg-profile-user-uploads" ng-repeat="activity in activities">
+		<div class="smorg-profile-user-uploads" ng-repeat="activity in activities" ng-click="activityClick(activity)">
 			<img src="http://smorgasbored.com/img/activity/{{ activity.id_activity }}.png"/>
 			<div class="smorg-profile-title">{{ activity.title }}</div>
 		</div>
+	</div>
+
+	<div class="activity-heading">
+		UPCOMING
+	</div>
+	<div class="activity-contents">
+<!-- 		<div class="smorg-profile-user-uploads" ng-repeat="activity in activities" ng-click="activityClick(activity)">
+			<img src="http://smorgasbored.com/img/activity/{{ activity.id_activity }}.png"/>
+			<div class="smorg-profile-title">{{ activity.title }}</div>
+		</div> -->
 	</div>
 
 	<div class="activity-heading">

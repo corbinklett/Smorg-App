@@ -10,15 +10,14 @@
 		</div>
 
 		<div class="smorg-post-photo"> 
-	<!-- 		<div class="smorg-photo-label">
+			<div class="smorg-photo-label">
 				<center><i class="icon-camera" style="font-size:18px;"></i>&nbsp&nbsp&nbsp&nbspGET PHOTOGRAPH</center>
-			</div> -->
+			</div>
 
 				<input class="smorg-photo-input" type="file" accept="image/*" capture="camera" placeimage="newimage" /> <!-- make sure placeimage="newimage" -->
 
-				<!-- <canvas class="smorg-show-image" id="uploadimg"></canvas> -->
 				<img class="smorg-show-image" id="postimg" src="{{ newimage.url }}" draggable />
-				<!-- {{ newimage.text }} <br/> -->
+
 		</div>
 
 		<button class="smorg-overlay-footbutton" ng-click="nextClick(newimage)">next</button>
